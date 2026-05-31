@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ORDER_URL = "https://order.casastegui.com/order";
 const INSTAGRAM_URL = "https://www.instagram.com/casastegui.media";
 const FACEBOOK_URL = "https://www.facebook.com/CasaSteguiPropertyMedia";
-const EMAIL_URL = "mailto:casastegui.media@gmail.com";
+const EMAIL = "casastegui.media@gmail.com";
+const EMAIL_URL = `mailto:${EMAIL}`;
+
+const routes = {
+  home: "/",
+  about: "/about",
+  packages: "/pricing",
+  work: "/portfolio",
+  "real-estate": "/real-estate-photography",
+  "virtual-staging": "/virtual-staging",
+  twilight: "/twilight-photography",
+  contact: "/contact",
+};
+
+const pageFromPath = (path) => {
+  const match = Object.entries(routes).find(([, route]) => route === path);
+  return match ? match[0] : "home";
+};
 
 const imageModules = import.meta.glob("./assets/images/*.{jpg,png}", {
   eager: true,
@@ -42,6 +59,7 @@ const stagingImages = images.filter((img) => /^virtualstaging\d+\.png$/i.test(im
 const packages = [
   {
     name: "Casa Essential",
+    label: "Core Listing Media",
     services: ["Interior + exterior photography", "Listing Website"],
     pricing: [
       ["< 1,500", "$160"],
@@ -53,6 +71,8 @@ const packages = [
   },
   {
     name: "Casa Elevate",
+    label: "Most Booked",
+    featured: true,
     services: ["Interior + exterior photography", "Twilight Photography", "Listing Website"],
     pricing: [
       ["< 1,500", "$260"],
@@ -64,6 +84,7 @@ const packages = [
   },
   {
     name: "Casa Signature",
+    label: "Complete Presentation",
     services: ["Interior + exterior photography", "Twilight Photography", "Virtual Staging", "Listing Website"],
     pricing: [
       ["< 1,500", "$340"],
@@ -104,7 +125,7 @@ function Navbar({ setPage, heroStyle = false }) {
   return (
     <header className={`z-50 w-full ${heroStyle ? "absolute left-0 top-0 bg-transparent" : "relative border-b border-[#fffef6]/10 bg-[#252422]"}`}>
       <div className="flex flex-col items-center px-[6%] py-7">
-        <button onClick={() => setPage("home")} className="flex items-center justify-center">
+        <button onClick={() => setPage("home")} className="flex items-center justify-center" aria-label="Go to homepage">
           {logoImg ? (
             <img src={logoImg} alt="Casa Stegui Property Media" className="h-[70px] w-auto max-w-[430px] object-contain" />
           ) : (
@@ -133,7 +154,7 @@ function Footer({ setPage }) {
       <div>
         <h3 className="font-serif text-2xl">Casa Stegui Property Media</h3>
         <p className="mt-8 max-w-sm leading-8 text-[#fffef6]/55">
-          Veteran-owned real estate photography and video, serving agents and homeowners across Central Texas.
+          Veteran-owned real estate photography, video, twilight photography, and virtual staging for Central Texas Realtors.
         </p>
       </div>
 
@@ -141,7 +162,7 @@ function Footer({ setPage }) {
         <p className="mb-8 text-xs uppercase tracking-[0.35em] text-[#fe7f2d]">Explore</p>
         <div className="grid gap-5 text-left text-[#fffef6]/60">
           <button onClick={() => setPage("home")} className="text-left transition hover:text-[#fe7f2d]">Home</button>
-          <button onClick={() => setPage("work")} className="text-left transition hover:text-[#fe7f2d]">Work</button>
+          <button onClick={() => setPage("work")} className="text-left transition hover:text-[#fe7f2d]">Portfolio</button>
           <button onClick={() => setPage("packages")} className="text-left transition hover:text-[#fe7f2d]">Pricing</button>
           <button onClick={() => setPage("about")} className="text-left transition hover:text-[#fe7f2d]">About</button>
           <button onClick={() => setPage("contact")} className="text-left transition hover:text-[#fe7f2d]">Contact</button>
@@ -155,7 +176,7 @@ function Footer({ setPage }) {
           <p>17 N 2nd Street #1063</p>
           <p>Temple, TX 76501</p>
           <p>United States</p>
-          <a href={EMAIL_URL} className="pt-4 transition hover:text-[#fe7f2d]">casastegui.media@gmail.com</a>
+          <a href={EMAIL_URL} className="pt-4 transition hover:text-[#fe7f2d]">{EMAIL}</a>
           <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="transition hover:text-[#fe7f2d]">@casastegui.media</a>
           <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="transition hover:text-[#fe7f2d]">CasaStegui Property Media</a>
         </div>
@@ -164,14 +185,86 @@ function Footer({ setPage }) {
   );
 }
 
+function TrustBar() {
+  return (
+    <section className="border-b border-[#fffef6]/10 bg-[#252422] px-[6%] py-8">
+      <div className="grid gap-5 text-center text-xs font-semibold uppercase tracking-[0.28em] text-[#fffef6]/70 md:grid-cols-5">
+        <p>Veteran Owned</p>
+        <p>Central Texas</p>
+        <p>MLS Ready</p>
+        <p>24–48 Hour Delivery</p>
+        <p>HDPhotoHub Delivery</p>
+      </div>
+    </section>
+  );
+}
+
+function ProcessSection() {
+  return (
+    <section className="border-b border-[#fffef6]/10 px-[6%] py-28">
+      <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
+        <span className="text-[#fe7f2d]">—</span> Process
+      </p>
+
+      <h2 className="mb-16 max-w-5xl font-serif text-[clamp(3rem,6vw,6rem)] leading-[0.95] tracking-[-0.04em]">
+        A simple workflow for busy agents.
+      </h2>
+
+      <div className="grid gap-6 md:grid-cols-4">
+        {[
+          ["01", "Book", "Choose your package, property details, and appointment time online."],
+          ["02", "Capture", "We photograph the property with clean composition, straight verticals, and market-ready framing."],
+          ["03", "Deliver", "Final media is delivered through HDPhotoHub within 24–48 hours."],
+          ["04", "Market", "Use your images for MLS, social media, listing websites, and client promotion."],
+        ].map(([number, title, copy]) => (
+          <article key={number} className="rounded-2xl border border-[#fffef6]/10 bg-[#252422] p-8">
+            <p className="font-serif text-5xl text-[#fe7f2d]">{number}</p>
+            <h3 className="mt-8 font-serif text-3xl">{title}</h3>
+            <p className="mt-5 leading-8 text-[#fffef6]/60">{copy}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ServiceAreaSection() {
+  const cities = ["Temple", "Killeen", "Copperas Cove", "Harker Heights", "Belton", "Georgetown", "Round Rock", "Salado"];
+
+  return (
+    <section className="border-b border-[#fffef6]/10 bg-[#252422] px-[6%] py-28">
+      <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
+        <span className="text-[#fe7f2d]">—</span> Service Area
+      </p>
+
+      <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+        <h2 className="max-w-4xl font-serif text-[clamp(3rem,6vw,6rem)] leading-[0.95] tracking-[-0.04em]">
+          Real estate media for Central Texas listings.
+        </h2>
+        <p className="max-w-2xl text-xl leading-9 text-[#fffef6]/60">
+          Casa Stegui serves agents, sellers, builders, and property teams across the Central Texas market.
+        </p>
+      </div>
+
+      <div className="mt-14 flex flex-wrap gap-4">
+        {cities.map((city) => (
+          <span key={city} className="rounded-full border border-[#fffef6]/10 px-6 py-4 text-sm uppercase tracking-[0.18em] text-[#fffef6]/70">
+            {city}
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function CTA() {
   return (
     <section className="px-[6%] py-28">
       <div className="flex flex-col justify-between gap-10 rounded-3xl border border-[#fffef6]/10 bg-[#252422] p-14 shadow-[0_0_110px_rgba(254,127,45,0.16)] md:flex-row md:items-center">
         <div>
-          <h2 className="max-w-xl font-serif text-5xl leading-tight">Your next listing deserves better photos.</h2>
+          <h2 className="max-w-xl font-serif text-5xl leading-tight">Ready for your next listing?</h2>
           <p className="mt-5 max-w-xl text-lg leading-8 text-[#fffef6]/60">
-            Lock in a shoot in under two minutes. New agents, ask about your first-listing rate.
+            Book professional real estate photography, video, twilight imagery, or virtual staging for your next Central Texas property.
           </p>
         </div>
 
@@ -187,13 +280,10 @@ function GalleryGrid({ images, title }) {
   return (
     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
       {images.map((image, index) => (
-        <div
-          key={image.name}
-          className="aspect-[4/3] overflow-hidden rounded-md border border-[#fffef6]/10 bg-[#252422]"
-        >
+        <div key={image.name} className="aspect-[4/3] overflow-hidden rounded-md border border-[#fffef6]/10 bg-[#252422]">
           <img
             src={image.src}
-            alt={`${title} image ${index + 1}`}
+            alt={`${title} portfolio image ${index + 1}`}
             className="h-full w-full object-cover transition duration-300 hover:scale-[1.015]"
           />
         </div>
@@ -215,8 +305,19 @@ function PackagesSection() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         {packages.map((item) => (
-          <article key={item.name} className="flex flex-col rounded-2xl border border-[#fffef6]/10 bg-[#252422] p-8 shadow-[0_0_60px_rgba(254,127,45,0.08)]">
-            <p className="mb-6 text-xs uppercase tracking-[0.35em] text-[#fe7f2d]">Package</p>
+          <article
+            key={item.name}
+            className={`flex flex-col rounded-2xl border bg-[#252422] p-8 shadow-[0_0_60px_rgba(254,127,45,0.08)] ${
+              item.featured ? "border-[#fe7f2d]/70" : "border-[#fffef6]/10"
+            }`}
+          >
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <p className="text-xs uppercase tracking-[0.35em] text-[#fe7f2d]">Package</p>
+              <p className="rounded-full border border-[#fffef6]/10 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-[#fffef6]/60">
+                {item.label}
+              </p>
+            </div>
+
             <h3 className="font-serif text-5xl leading-none">{item.name}</h3>
 
             <div className="mt-12 border-t border-[#fffef6]/10 pt-8">
@@ -240,7 +341,16 @@ function PackagesSection() {
               </div>
             </div>
 
-            <a href={ORDER_URL} target="_blank" rel="noopener noreferrer" className="mt-12 inline-block w-fit rounded-full border border-[#fffef6]/20 px-7 py-4 font-semibold text-[#fffef6] transition hover:border-[#fe7f2d] hover:text-[#fe7f2d]">
+            <a
+              href={ORDER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`mt-12 inline-block w-fit rounded-full px-7 py-4 font-semibold transition ${
+                item.featured
+                  ? "bg-[#fe7f2d] text-[#fffef6] hover:opacity-90"
+                  : "border border-[#fffef6]/20 text-[#fffef6] hover:border-[#fe7f2d] hover:text-[#fe7f2d]"
+              }`}
+            >
               Book Package →
             </a>
           </article>
@@ -304,6 +414,40 @@ function DeliverablesSection() {
 }
 
 function ContactSection() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    service: "Photography",
+    message: "",
+  });
+
+  const updateForm = (event) => {
+    setForm((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const submitInquiry = (event) => {
+    event.preventDefault();
+
+    const subject = encodeURIComponent(`Casa Stegui Inquiry - ${form.address || "New Listing"}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}
+Email: ${form.email}
+Phone: ${form.phone}
+Property Address: ${form.address}
+Service Needed: ${form.service}
+
+Details:
+${form.message}`
+    );
+
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+  };
+
   return (
     <section id="contact" className="border-b border-[#fffef6]/10 px-[6%] py-28">
       <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
@@ -315,7 +459,7 @@ function ContactSection() {
       </h2>
 
       <p className="mt-8 max-w-3xl text-xl leading-9 text-[#fffef6]/60">
-        Ready to book? Go straight to scheduling. Have a question first? Send us the details and we will reply same day.
+        Ready to book? Go straight to scheduling. Have a question first? Send the listing details and we will reply same day.
       </p>
 
       <div className="mt-24 grid gap-20 lg:grid-cols-2">
@@ -332,8 +476,8 @@ function ContactSection() {
 
           <div className="mt-14 divide-y divide-[#fffef6]/10">
             {[
-              ["Email", <a href={EMAIL_URL} className="transition hover:text-[#fe7f2d]">casastegui.media@gmail.com</a>],
-              ["Service Area", "Temple & Central Texas"],
+              ["Email", <a href={EMAIL_URL} className="transition hover:text-[#fe7f2d]">{EMAIL}</a>],
+              ["Service Area", "Temple, Killeen, Copperas Cove, Harker Heights, Belton, Georgetown, Round Rock"],
               ["Response Time", "Same business day"],
               ["Instagram", <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="transition hover:text-[#fe7f2d]">@casastegui.media</a>],
               ["Facebook", <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="transition hover:text-[#fe7f2d]">CasaStegui Property Media</a>],
@@ -346,14 +490,14 @@ function ContactSection() {
           </div>
         </div>
 
-        <form className="rounded-2xl border border-[#fffef6]/10 bg-[#252422] p-10">
+        <form onSubmit={submitInquiry} className="rounded-2xl border border-[#fffef6]/10 bg-[#252422] p-10">
           <div className="grid gap-6">
-            <input type="text" placeholder="Your name" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
-            <input type="email" placeholder="you@email.com" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
-            <input type="tel" placeholder="(000) 000-0000" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
-            <input type="text" placeholder="Property address" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
+            <input name="name" value={form.name} onChange={updateForm} type="text" placeholder="Your name" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
+            <input name="email" value={form.email} onChange={updateForm} type="email" placeholder="you@email.com" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
+            <input name="phone" value={form.phone} onChange={updateForm} type="tel" placeholder="(000) 000-0000" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
+            <input name="address" value={form.address} onChange={updateForm} type="text" placeholder="Property address" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
 
-            <select className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none">
+            <select name="service" value={form.service} onChange={updateForm} className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none">
               <option>Photography</option>
               <option>Photography + Video</option>
               <option>Twilight</option>
@@ -361,10 +505,10 @@ function ContactSection() {
               <option>Full Listing Media</option>
             </select>
 
-            <textarea rows="5" placeholder="Square footage, timeline, anything we should know" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
+            <textarea name="message" value={form.message} onChange={updateForm} rows="5" placeholder="Square footage, timeline, anything we should know" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
 
-            <button type="button" className="mt-4 rounded-full bg-[#fe7f2d] px-8 py-5 font-semibold text-[#fffef6] transition hover:opacity-90">
-              Send inquiry →
+            <button type="submit" className="mt-4 rounded-full bg-[#fe7f2d] px-8 py-5 font-semibold text-[#fffef6] transition hover:opacity-90">
+              Send inquiry by email →
             </button>
           </div>
         </form>
@@ -377,7 +521,7 @@ function PortfolioCard({ image, label, title, copy, onClick }) {
   return (
     <button onClick={onClick} className="group relative min-h-[520px] overflow-hidden rounded-2xl border border-[#fffef6]/10 bg-[#252422] text-left transition duration-500 hover:border-[#fe7f2d]/60">
       {image && (
-        <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.65] transition duration-700 group-hover:scale-105 group-hover:opacity-[0.72]" />
+        <img src={image} alt={`${title} preview`} className="absolute inset-0 h-full w-full object-cover opacity-[0.65] transition duration-700 group-hover:scale-105 group-hover:opacity-[0.72]" />
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-[#252422]/30 via-[#252422]/68 to-[#252422]/94" />
       <div className="relative z-10 flex h-full flex-col justify-end p-10">
@@ -396,7 +540,7 @@ function WorkHub({ setPage }) {
 
       <section className="px-[6%] pb-24 pt-20">
         <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
-          <span className="text-[#fe7f2d]">—</span> Work
+          <span className="text-[#fe7f2d]">—</span> Portfolio
         </p>
         <h1 className="max-w-6xl font-serif text-[clamp(4rem,8vw,8rem)] leading-[0.9] tracking-[-0.04em]">
           Portfolio categories.
@@ -407,7 +551,7 @@ function WorkHub({ setPage }) {
       </section>
 
       <section className="grid gap-6 px-[6%] pb-28 md:grid-cols-3">
-        <PortfolioCard image={realEstateCardImg} label="Real Estate" title="Property Gallery" copy="Property 1, Property 2, and Property 3 organized as individual listing galleries." onClick={() => setPage("real-estate")} />
+        <PortfolioCard image={realEstateCardImg} label="Real Estate" title="Property Gallery" copy="Interior and exterior listing photography organized by property." onClick={() => setPage("real-estate")} />
         <PortfolioCard image={stagingCardImg} label="Virtual Staging" title="Staged Interiors" copy="Styled spaces designed to help buyers understand scale, warmth, and lifestyle potential." onClick={() => setPage("virtual-staging")} />
         <PortfolioCard image={twilightCardImg} label="Twilight" title="Atmosphere After Sunset" copy="Exterior twilight visuals built around curb appeal, mood, and stronger first impressions." onClick={() => setPage("twilight")} />
       </section>
@@ -444,10 +588,10 @@ function RealEstatePage({ setPage }) {
       <Navbar setPage={setPage} />
       <section className="px-[6%] pb-20 pt-20">
         <button onClick={() => setPage("work")} className="mb-10 text-xs uppercase tracking-[0.3em] text-[#fe7f2d]">
-          ← Back to Work
+          ← Back to Portfolio
         </button>
         <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
-          <span className="text-[#fe7f2d]">—</span> Real Estate
+          <span className="text-[#fe7f2d]">—</span> Real Estate Photography
         </p>
         <h1 className="max-w-6xl font-serif text-[clamp(4rem,8vw,8rem)] leading-[0.9] tracking-[-0.04em]">
           Property galleries.
@@ -481,7 +625,7 @@ function VirtualStagingPage({ setPage }) {
       <Navbar setPage={setPage} />
       <section className="px-[6%] pb-20 pt-20">
         <button onClick={() => setPage("work")} className="mb-10 text-xs uppercase tracking-[0.3em] text-[#fe7f2d]">
-          ← Back to Work
+          ← Back to Portfolio
         </button>
         <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
           <span className="text-[#fe7f2d]">—</span> Virtual Staging
@@ -505,17 +649,17 @@ function TwilightPage({ setPage }) {
       <Navbar setPage={setPage} />
       <section className="px-[6%] pb-20 pt-20">
         <button onClick={() => setPage("work")} className="mb-10 text-xs uppercase tracking-[0.3em] text-[#fe7f2d]">
-          ← Back to Work
+          ← Back to Portfolio
         </button>
         <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
-          <span className="text-[#fe7f2d]">—</span> Twilight
+          <span className="text-[#fe7f2d]">—</span> Twilight Photography
         </p>
         <h1 className="max-w-6xl font-serif text-[clamp(4rem,8vw,8rem)] leading-[0.9] tracking-[-0.04em]">
           Atmosphere after sunset.
         </h1>
       </section>
       <section className="border-t border-[#fffef6]/10 px-[6%] py-28">
-        <GalleryGrid images={twilightImages} title="Twilight" />
+        <GalleryGrid images={twilightImages} title="Twilight Photography" />
       </section>
       <CTA />
       <Footer setPage={setPage} />
@@ -538,7 +682,7 @@ function AboutPage({ setPage }) {
         <div className="mt-24 grid gap-20 lg:grid-cols-[0.9fr_1.2fr]">
           <div>
             {aboutImg ? (
-              <img src={aboutImg} alt="Manuel and Melanie portrait" className="h-[780px] w-full rounded-md border border-[#fffef6]/10 object-cover" />
+              <img src={aboutImg} alt="Manuel and Melanie of Casa Stegui" className="h-[780px] w-full rounded-md border border-[#fffef6]/10 object-cover" />
             ) : (
               <div className="flex h-[780px] items-end rounded-md border border-[#fffef6]/10 bg-[#252422] p-6">
                 <p className="rounded-full bg-[#252422] px-5 py-3 text-xs uppercase tracking-[0.25em] text-[#fffef6]/70">
@@ -621,13 +765,16 @@ function HomePage({ setPage }) {
 
         <div className="relative z-10 max-w-6xl">
           <p className="mb-10 text-sm font-bold uppercase tracking-[0.28em] text-[#fffef6]/85">
-            Veteran Owned
+            Veteran Owned Property Media
           </p>
           <h1 className="max-w-5xl font-serif text-[clamp(4rem,8vw,7.5rem)] leading-[0.92] tracking-[-0.045em] text-[#fffef6]">
-            Designed to present properties at their highest value.
+            Real estate photography built to strengthen your listing.
           </h1>
+          <p className="mt-8 max-w-3xl text-xl leading-9 text-[#fffef6]/75">
+            Photography, video, twilight imagery, virtual staging, and listing media for Realtors across Central Texas.
+          </p>
 
-          <div className="mt-28 flex flex-wrap gap-5">
+          <div className="mt-20 flex flex-wrap gap-5">
             <button onClick={() => setPage("work")} className="border border-[#fffef6]/70 px-10 py-5 text-xs font-bold uppercase tracking-[0.35em] text-[#fffef6] transition hover:border-[#fe7f2d] hover:text-[#fe7f2d]">
               View Portfolio
             </button>
@@ -637,6 +784,8 @@ function HomePage({ setPage }) {
           </div>
         </div>
       </section>
+
+      <TrustBar />
 
       <section className="grid gap-16 border-b border-[#fffef6]/10 px-[6%] py-28 md:grid-cols-3">
         <div>
@@ -662,8 +811,10 @@ function HomePage({ setPage }) {
         </div>
       </section>
 
+      <ProcessSection />
       <PackagesSection />
       <DeliverablesSection />
+      <ServiceAreaSection />
 
       <section className="border-b border-[#fffef6]/10 px-[6%] py-28">
         <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
@@ -686,8 +837,8 @@ function HomePage({ setPage }) {
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {propertyPreviewImages.map((image) => (
-            <img key={image.name} src={image.src} alt="" className="h-[620px] w-full rounded-sm border border-[#fffef6]/10 object-cover" />
+          {propertyPreviewImages.map((image, index) => (
+            <img key={image.name} src={image.src} alt={`Casa Stegui real estate photography preview ${index + 1}`} className="h-[620px] w-full rounded-sm border border-[#fffef6]/10 object-cover" />
           ))}
         </div>
       </section>
@@ -703,7 +854,7 @@ function HomePage({ setPage }) {
         <div className="grid gap-20 lg:grid-cols-[0.9fr_1.2fr]">
           <div>
             {aboutImg ? (
-              <img src={aboutImg} alt="Manuel and Melanie" className="h-[680px] w-full rounded-md border border-[#fffef6]/10 object-cover" />
+              <img src={aboutImg} alt="Manuel and Melanie of Casa Stegui" className="h-[680px] w-full rounded-md border border-[#fffef6]/10 object-cover" />
             ) : (
               <div className="flex h-[680px] w-full items-end rounded-md border border-[#fffef6]/10 bg-[#252422] p-6">
                 <p className="rounded-full bg-[#252422] px-5 py-3 text-xs uppercase tracking-[0.25em] text-[#fffef6]/70">
@@ -747,7 +898,26 @@ function HomePage({ setPage }) {
 }
 
 export default function App() {
-  const [page, setPage] = useState("home");
+  const [page, setCurrentPage] = useState(() => pageFromPath(window.location.pathname));
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPage(pageFromPath(window.location.pathname));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  const setPage = (nextPage) => {
+    const nextPath = routes[nextPage] || "/";
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({}, "", nextPath);
+    }
+    setCurrentPage(nextPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   if (page === "work") return <WorkHub setPage={setPage} />;
   if (page === "packages") return <PackagesPage setPage={setPage} />;
