@@ -422,6 +422,8 @@ function ContactSection() {
     service: "Photography",
     message: "",
   });
+  const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateForm = (event) => {
     setForm((current) => ({
@@ -430,22 +432,56 @@ function ContactSection() {
     }));
   };
 
-  const submitInquiry = (event) => {
+  const submitInquiry = async (event) => {
     event.preventDefault();
 
-    const subject = encodeURIComponent(`Casa Stegui Inquiry - ${form.address || "New Listing"}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}
-Email: ${form.email}
-Phone: ${form.phone}
-Property Address: ${form.address}
-Service Needed: ${form.service}
+    if (!form.name.trim() || !form.email.trim()) {
+      setStatus("Please add your name and email so we can respond.");
+      return;
+    }
 
-Details:
-${form.message}`
-    );
+    setIsSubmitting(true);
+    setStatus("Sending inquiry...");
 
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    try {
+      const response = await fetch("/api/casa-lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          propertyAddress: form.address,
+          serviceNeeded: form.service,
+          message: form.message,
+          sourcePage: window.location.href,
+          consent: "Yes",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Submission failed");
+      }
+
+      setStatus("Inquiry received. We will review the listing details and follow up soon.");
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        service: "Photography",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Casa Stegui inquiry error:", error);
+      setStatus("Something went wrong. Please email casastegui.media@gmail.com or try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -507,9 +543,19 @@ ${form.message}`
 
             <textarea name="message" value={form.message} onChange={updateForm} rows="5" placeholder="Square footage, timeline, anything we should know" className="rounded-lg border border-[#fffef6]/15 bg-[#252422] px-5 py-4 text-[#fffef6] outline-none placeholder:text-[#fffef6]/35" />
 
-            <button type="submit" className="mt-4 rounded-full bg-[#fe7f2d] px-8 py-5 font-semibold text-[#fffef6] transition hover:opacity-90">
-              Send inquiry by email →
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="mt-4 rounded-full bg-[#fe7f2d] px-8 py-5 font-semibold text-[#fffef6] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSubmitting ? "Sending inquiry..." : "Send inquiry →"}
             </button>
+
+            {status && (
+              <p className="text-sm leading-6 text-[#fffef6]/70">
+                {status}
+              </p>
+            )}
           </div>
         </form>
       </div>
