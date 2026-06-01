@@ -2,6 +2,9 @@ exports.handler = async function (event) {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ ok: false, error: "Method not allowed" }),
     };
   }
@@ -12,6 +15,9 @@ exports.handler = async function (event) {
     if (!webhookUrl) {
       return {
         statusCode: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ ok: false, error: "Lead webhook is not configured" }),
       };
     }
@@ -30,6 +36,9 @@ exports.handler = async function (event) {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         ok: response.ok,
         result: text,
@@ -38,6 +47,9 @@ exports.handler = async function (event) {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ ok: false, error: String(error) }),
     };
   }
