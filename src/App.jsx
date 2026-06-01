@@ -444,7 +444,7 @@ function ContactSection() {
     setStatus("Sending inquiry...");
 
     try {
-      const response = await fetch("/api/casa-lead", {
+      const response = await fetch("/.netlify/functions/casa-lead", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
