@@ -53,18 +53,45 @@ function removeLegacyBottomBlocks() {
 
 function initializeGoogleReviews() {
   const fallbackMarkup = `
-    <div class="casa-google-review-fallback" aria-label="Casa Stegui Google reviews">
-      <article>
-        <div><span>★★★★★</span><strong>Valeria Ortiz</strong></div>
+    <div class="casa-google-review-fallback" aria-label="Casa Stegui Google Business reviews">
+      <article class="casa-google-card">
+        <div class="casa-google-card-top">
+          <div class="casa-google-avatar">V</div>
+          <div class="casa-google-meta">
+            <strong>Valeria Ortiz</strong>
+            <span>Google review</span>
+          </div>
+          <div class="casa-google-g" aria-label="Google">G</div>
+        </div>
+        <div class="casa-google-stars" aria-label="5 star review">★★★★★ <span>5.0</span></div>
         <p>Quality customer service, quick turnaround, and professional work.</p>
+        <a href="https://www.google.com/search?q=Casa+Stegui+Media+Google+reviews" target="_blank" rel="noopener noreferrer">Read on Google</a>
       </article>
-      <article>
-        <div><span>★★★★★</span><strong>Anthony Hernandez</strong></div>
+      <article class="casa-google-card">
+        <div class="casa-google-card-top">
+          <div class="casa-google-avatar">A</div>
+          <div class="casa-google-meta">
+            <strong>Anthony Hernandez</strong>
+            <span>Google review</span>
+          </div>
+          <div class="casa-google-g" aria-label="Google">G</div>
+        </div>
+        <div class="casa-google-stars" aria-label="5 star review">★★★★★ <span>5.0</span></div>
         <p>Very professional, responsive, and easy to work with from start to finish.</p>
+        <a href="https://www.google.com/search?q=Casa+Stegui+Media+Google+reviews" target="_blank" rel="noopener noreferrer">Read on Google</a>
       </article>
-      <article>
-        <div><span>★★★★★</span><strong>Amy Wagner</strong></div>
+      <article class="casa-google-card">
+        <div class="casa-google-card-top">
+          <div class="casa-google-avatar">A</div>
+          <div class="casa-google-meta">
+            <strong>Amy Wagner</strong>
+            <span>Google review</span>
+          </div>
+          <div class="casa-google-g" aria-label="Google">G</div>
+        </div>
+        <div class="casa-google-stars" aria-label="5 star review">★★★★★ <span>5.0</span></div>
         <p>Excellent services with clear communication and reliable delivery.</p>
+        <a href="https://www.google.com/search?q=Casa+Stegui+Media+Google+reviews" target="_blank" rel="noopener noreferrer">Read on Google</a>
       </article>
     </div>
   `
@@ -82,38 +109,111 @@ function initializeGoogleReviews() {
         width: 100%;
       }
 
-      .casa-google-review-fallback article {
-        border: 1px solid rgba(255, 254, 246, 0.10);
-        border-radius: 18px;
-        background: rgba(37, 36, 34, 0.92);
-        padding: 26px;
-        min-height: 210px;
+      .casa-google-card {
+        border: 1px solid rgba(218, 220, 224, 0.85);
+        border-radius: 14px;
+        background: #ffffff;
+        color: #202124;
+        padding: 22px;
+        min-height: 230px;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+        font-family: Arial, Helvetica, sans-serif;
       }
 
-      .casa-google-review-fallback div {
+      .casa-google-card-top {
         display: grid;
+        grid-template-columns: 46px 1fr 32px;
+        align-items: center;
         gap: 12px;
         margin-bottom: 18px;
       }
 
-      .casa-google-review-fallback span {
-        color: #fe7f2d;
-        font-size: 18px;
-        letter-spacing: 0.08em;
+      .casa-google-avatar {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #7e57c2;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 700;
       }
 
-      .casa-google-review-fallback strong {
-        color: #fffef6;
-        font-family: Georgia, serif;
-        font-size: 22px;
-        font-weight: 500;
+      .casa-google-card:nth-child(2) .casa-google-avatar {
+        background: #1a73e8;
       }
 
-      .casa-google-review-fallback p {
-        color: rgba(255, 254, 246, 0.64);
+      .casa-google-card:nth-child(3) .casa-google-avatar {
+        background: #e8710a;
+      }
+
+      .casa-google-meta {
+        display: grid;
+        gap: 2px;
+      }
+
+      .casa-google-meta strong {
+        color: #202124;
         font-size: 16px;
-        line-height: 1.75;
-        margin: 0;
+        font-weight: 700;
+        line-height: 1.25;
+      }
+
+      .casa-google-meta span {
+        color: #5f6368;
+        font-size: 13px;
+        line-height: 1.3;
+      }
+
+      .casa-google-g {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #4285f4;
+        background: #f8fafd;
+        border: 1px solid #e8eaed;
+        font-size: 18px;
+        font-weight: 800;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .casa-google-stars {
+        color: #fbbc04;
+        font-size: 18px;
+        letter-spacing: 0.03em;
+        margin-bottom: 14px;
+        line-height: 1;
+      }
+
+      .casa-google-stars span {
+        color: #3c4043;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0;
+        margin-left: 8px;
+      }
+
+      .casa-google-card p {
+        color: #3c4043;
+        font-size: 15px;
+        line-height: 1.65;
+        margin: 0 0 18px;
+      }
+
+      .casa-google-card a {
+        color: #1a73e8;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .casa-google-card a:hover {
+        text-decoration: underline;
       }
 
       @media (max-width: 767px) {
@@ -122,18 +222,10 @@ function initializeGoogleReviews() {
           gap: 14px;
         }
 
-        .casa-google-review-fallback article {
+        .casa-google-card {
           min-height: auto;
-          padding: 22px;
-        }
-
-        .casa-google-review-fallback strong {
-          font-size: 20px;
-        }
-
-        .casa-google-review-fallback p {
-          font-size: 15px;
-          line-height: 1.65;
+          padding: 20px;
+          border-radius: 14px;
         }
       }
     `
