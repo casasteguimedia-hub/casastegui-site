@@ -1,0 +1,84 @@
+@media (max-width: 767px) {
+  /* Remove the crowded mobile pill nav. Mobile uses hamburger drawer only. */
+  header nav {
+    display: none !important;
+  }
+
+  header {
+    min-height: 128px !important;
+  }
+
+  header > div {
+    align-items: flex-start !important;
+    padding-top: 26px !important;
+    padding-bottom: 18px !important;
+  }
+
+  header img {
+    max-width: min(74vw, 315px) !important;
+    height: auto !important;
+  }
+
+  .casa-mobile-menu-button {
+    display: inline-flex !important;
+    position: absolute !important;
+    top: 32px !important;
+    right: 6% !important;
+    z-index: 80 !important;
+    width: 52px !important;
+    height: 52px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    flex-direction: column !important;
+    border: 1px solid rgba(255, 254, 246, 0.22) !important;
+    border-radius: 999px !important;
+    background: rgba(37, 36, 34, 0.78) !important;
+    backdrop-filter: blur(14px) !important;
+  }
+
+  .casa-mobile-menu-button span {
+    display: block !important;
+    width: 18px !important;
+    height: 2px !important;
+    border-radius: 999px !important;
+    background: #fffef6 !important;
+  }
+
+  /* Add breathing room between logo/nav zone and hero copy. */
+  section[class*="min-h-screen"] {
+    min-height: 88vh !important;
+    padding-top: 210px !important;
+    padding-bottom: 96px !important;
+    align-items: flex-start !important;
+  }
+
+  section[class*="min-h-screen"] > div {
+    max-width: 100% !important;
+  }
+
+  section[class*="min-h-screen"] h1 {
+    font-size: clamp(2.75rem, 12.8vw, 4.15rem) !important;
+    line-height: 0.94 !important;
+    letter-spacing: -0.052em !important;
+  }
+
+  section[class*="min-h-screen"] p {
+    font-size: 1rem !important;
+    line-height: 1.72 !important;
+  }
+
+  section[class*="min-h-screen"] .uppercase {
+    letter-spacing: 0.2em !important;
+  }
+
+  section[class*="min-h-screen"] div[class*="mt-20"],
+  section[class*="min-h-screen"] div[class*="mt-12"] {
+    margin-top: 2rem !important;
+  }
+
+  section[class*="min-h-screen"] a,
+  section[class*="min-h-screen"] button {
+    min-height: 54px !important;
+  }
+}
