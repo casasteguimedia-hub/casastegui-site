@@ -66,7 +66,7 @@ function initializeGoogleReviews() {
           <div class="casa-google-avatar">V<span>G</span></div>
           <div class="casa-google-meta">
             <strong>Valeria Ortiz <em>✓</em></strong>
-            <small>5 days ago</small>
+            <small>Google Review · 5 days ago</small>
           </div>
         </div>
         <div class="casa-google-stars" aria-label="5 star review">★★★★★</div>
@@ -78,7 +78,7 @@ function initializeGoogleReviews() {
           <div class="casa-google-avatar casa-google-photo-avatar">A<span>G</span></div>
           <div class="casa-google-meta">
             <strong>Anthony Hernandez <em>✓</em></strong>
-            <small>5 days ago</small>
+            <small>Google Review · 5 days ago</small>
           </div>
         </div>
         <div class="casa-google-stars" aria-label="5 star review">★★★★★</div>
@@ -91,7 +91,7 @@ function initializeGoogleReviews() {
           <div class="casa-google-avatar casa-google-amy-avatar">A<span>G</span></div>
           <div class="casa-google-meta">
             <strong>Amy Wagner <em>✓</em></strong>
-            <small>1 month ago</small>
+            <small>Google Review · 1 month ago</small>
           </div>
         </div>
         <div class="casa-google-stars" aria-label="5 star review">★★★★★</div>
@@ -203,21 +203,7 @@ function initializeGoogleReviews() {
       }
 
       .casa-google-avatar span {
-        position: absolute;
-        right: -4px;
-        bottom: -4px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: #fffef6;
-        color: #4285f4;
-        border: 2px solid #1e1e1d;
-        font-size: 12px;
-        font-weight: 900;
-        font-family: Arial, Helvetica, sans-serif;
+        display: none;
       }
 
       .casa-google-meta {
