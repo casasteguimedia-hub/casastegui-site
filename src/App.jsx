@@ -199,6 +199,38 @@ function TrustBar() {
   );
 }
 
+function GoogleReviewsSection() {
+  useEffect(() => {
+    if (!document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')) {
+      const script = document.createElement("script");
+      script.src = "https://elfsightcdn.com/platform.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  return (
+    <section className="border-b border-[#fffef6]/10 px-[6%] py-28">
+      <div className="mb-14 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+        <div>
+          <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
+            <span className="text-[#fe7f2d]">—</span> Google Reviews
+          </p>
+          <h2 className="max-w-5xl font-serif text-[clamp(3rem,6vw,6rem)] leading-[0.95] tracking-[-0.04em]">
+            Trusted by Central Texas Realtors.
+          </h2>
+        </div>
+        <p className="max-w-2xl text-xl leading-9 text-[#fffef6]/60">
+          Real feedback from clients who booked Casa Stegui for professional listing media, fast delivery, and clear communication.
+        </p>
+      </div>
+      <div className="rounded-2xl border border-[#fffef6]/10 bg-[#252422] p-8 shadow-[0_0_90px_rgba(254,127,45,0.12)]">
+        <div className="elfsight-app-15ad62a5-707f-46f1-86d5-f98520e1b8f8" data-elfsight-app-lazy></div>
+      </div>
+    </section>
+  );
+}
+
 function ProcessSection() {
   return (
     <section className="border-b border-[#fffef6]/10 px-[6%] py-28">
@@ -857,7 +889,6 @@ function HomePage({ setPage }) {
         </div>
       </section>
 
-      <ProcessSection />
       <PackagesSection />
       <DeliverablesSection />
       <ServiceAreaSection />
@@ -888,6 +919,8 @@ function HomePage({ setPage }) {
           ))}
         </div>
       </section>
+
+      <GoogleReviewsSection />
 
       <section className="border-b border-[#fffef6]/10 px-[6%] py-28">
         <p className="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45">
