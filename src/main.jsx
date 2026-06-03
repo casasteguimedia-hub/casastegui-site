@@ -58,12 +58,12 @@ function initializeGoogleReviews() {
         <div class="casa-google-brand-mark">G</div>
         <strong>5.0</strong>
         <span class="casa-google-summary-stars" aria-label="5 star rating">★★★★★</span>
-        <small>(3)</small>
+        <small>3 Google reviews</small>
       </div>
 
       <article class="casa-google-card">
         <div class="casa-google-card-top">
-          <div class="casa-google-avatar">V<span>G</span></div>
+          <div class="casa-google-avatar">V</div>
           <div class="casa-google-meta">
             <strong>Valeria Ortiz <em>✓</em></strong>
             <small>Google Review · 5 days ago</small>
@@ -75,20 +75,20 @@ function initializeGoogleReviews() {
 
       <article class="casa-google-card">
         <div class="casa-google-card-top">
-          <div class="casa-google-avatar casa-google-photo-avatar">A<span>G</span></div>
+          <div class="casa-google-avatar casa-google-photo-avatar">A</div>
           <div class="casa-google-meta">
             <strong>Anthony Hernandez <em>✓</em></strong>
             <small>Google Review · 5 days ago</small>
           </div>
         </div>
         <div class="casa-google-stars" aria-label="5 star review">★★★★★</div>
-        <p>Very professional, responsive, and easy to work with. The photos came out amazing and really made the property stand out. Highly recommend...</p>
-        <a href="https://www.google.com/search?q=Casa+Stegui+Media+Google+reviews" target="_blank" rel="noopener noreferrer">Read more</a>
+        <p>Very professional, responsive, and easy to work with. The photos came out amazing and really made the property stand out.</p>
+        <a href="https://www.google.com/search?q=Casa+Stegui+Media+Google+reviews" target="_blank" rel="noopener noreferrer">Read more on Google</a>
       </article>
 
       <article class="casa-google-card">
         <div class="casa-google-card-top">
-          <div class="casa-google-avatar casa-google-amy-avatar">A<span>G</span></div>
+          <div class="casa-google-avatar casa-google-amy-avatar">A</div>
           <div class="casa-google-meta">
             <strong>Amy Wagner <em>✓</em></strong>
             <small>Google Review · 1 month ago</small>
@@ -96,7 +96,7 @@ function initializeGoogleReviews() {
         </div>
         <div class="casa-google-stars" aria-label="5 star review">★★★★★</div>
         <p>Excellent services with very quick turnaround time. Will definitely be my go to company for real estate photography.</p>
-        <a href="https://www.google.com/search?q=Casa+Stegui+Media+Google+reviews" target="_blank" rel="noopener noreferrer">Read more</a>
+        <a href="https://www.google.com/search?q=Casa+Stegui+Media+Google+reviews" target="_blank" rel="noopener noreferrer">Read more on Google</a>
       </article>
     </div>
   `
@@ -181,7 +181,6 @@ function initializeGoogleReviews() {
       }
 
       .casa-google-avatar {
-        position: relative;
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -194,17 +193,8 @@ function initializeGoogleReviews() {
         font-weight: 800;
       }
 
-      .casa-google-photo-avatar {
-        background: #1a73e8;
-      }
-
-      .casa-google-amy-avatar {
-        background: #e8710a;
-      }
-
-      .casa-google-avatar span {
-        display: none;
-      }
+      .casa-google-photo-avatar { background: #1a73e8; }
+      .casa-google-amy-avatar { background: #e8710a; }
 
       .casa-google-meta {
         display: grid;
@@ -254,10 +244,6 @@ function initializeGoogleReviews() {
         text-decoration: none;
       }
 
-      .casa-google-card a:hover {
-        text-decoration: underline;
-      }
-
       @media (max-width: 767px) {
         .casa-google-review-fallback {
           grid-template-columns: 1fr;
@@ -288,16 +274,12 @@ function initializeGoogleReviews() {
     document.head.appendChild(style)
   }
 
-  const replaceEmptyWidgets = () => {
+  const forceReviewsVisible = () => {
     styleFallback()
 
     document.querySelectorAll('.elfsight-app-15ad62a5-707f-46f1-86d5-f98520e1b8f8').forEach((widget) => {
       widget.removeAttribute('data-elfsight-app-lazy')
-
-      const hasVisibleContent = widget.textContent.trim().length > 0 || widget.children.length > 0
-      if (!hasVisibleContent) {
-        widget.outerHTML = fallbackMarkup
-      }
+      widget.outerHTML = fallbackMarkup
     })
   }
 
@@ -328,8 +310,7 @@ function initializeGoogleReviews() {
   requestAnimationFrame(run)
   setTimeout(run, 500)
   setTimeout(run, 1500)
-  setTimeout(replaceEmptyWidgets, 2600)
-  setTimeout(replaceEmptyWidgets, 4200)
+  setTimeout(forceReviewsVisible, 2400)
 }
 
 createRoot(document.getElementById('root')).render(
