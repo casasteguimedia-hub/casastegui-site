@@ -152,38 +152,10 @@ function enhanceImagesAndPerformance() {
     document.querySelectorAll('img').forEach((image, index) => {
       if (index > 1) image.setAttribute('loading', 'lazy')
       image.setAttribute('decoding', 'async')
-      if (!image.getAttribute('width')) image.setAttribute('width', '1600')
-      if (!image.getAttribute('height')) image.setAttribute('height', '1200')
     })
   }
 
   onReady(() => setTimeout(setup, 1000))
-}
-
-function enhanceMobileFooter() {
-  const setup = () => {
-    const footer = document.querySelector('footer')
-    if (!footer || footer.querySelector('.casa-mobile-footer-actions')) return
-
-    const actions = document.createElement('div')
-    actions.className = 'casa-mobile-footer-actions'
-    actions.innerHTML = `
-      <a href="${PHONE_URL}">Call</a>
-      <a href="mailto:${EMAIL}">Email</a>
-      <a href="/quote/">Quote</a>
-    `
-    footer.prepend(actions)
-
-    const serviceAreaText = [...footer.querySelectorAll('p')].find((item) => /Killeen|Copperas Cove|Harker Heights|Georgetown/.test(item.textContent || ''))
-    if (serviceAreaText && !footer.querySelector('.casa-service-accordion')) {
-      const details = document.createElement('details')
-      details.className = 'casa-service-accordion'
-      details.innerHTML = `<summary>Service Areas</summary><p>${serviceAreaText.textContent}</p>`
-      serviceAreaText.replaceWith(details)
-    }
-  }
-
-  onReady(() => setTimeout(setup, 1100))
 }
 
 function enhanceGoogleReviews() {
@@ -223,48 +195,6 @@ function enhanceGoogleReviews() {
   onReady(() => setTimeout(setup, 1400))
 }
 
-function enhanceMobileHomepageOrder() {
-  const setup = () => {
-    if (!window.matchMedia('(max-width: 767px)').matches) return
-    if (window.location.pathname !== '/') return
-
-    const main = document.querySelector('#root main')
-    if (!main || main.dataset.mobileOrdered === 'true') return
-
-    const findSection = (text) => {
-      const node = [...main.querySelectorAll('p,h1,h2,h3')].find((item) => item.textContent?.includes(text))
-      return node?.closest('section') || null
-    }
-
-    const hero = main.querySelector('section[class*="min-h-screen"]')
-    const trustBar = [...main.querySelectorAll('section')].find((section) => /Veteran Owned|MLS Ready|HDPhotoHub/.test(section.textContent || ''))
-    const proofCards = findSection('Built on discipline')
-    const portfolio = findSection('Selected Work')
-    const reviews = document.querySelector('.casa-google-reviews-section')
-    const packages = findSection('Packages') || findSection('Listing media packages')
-    const process = findSection('Process') || findSection('A simple workflow')
-    const serviceArea = findSection('Service Area') || findSection('Real estate media for Central Texas')
-    const about = findSection('About The Studio')
-    const contact = document.querySelector('#contact')
-    const finalCta = [...main.querySelectorAll('section')].find((section) => /Ready for your next listing/.test(section.textContent || ''))
-    const footer = document.querySelector('footer')
-    const deliverables = findSection('Deliverables') || findSection('Clear expectations')
-
-    if (proofCards) proofCards.classList.add('casa-mobile-hidden-section')
-    if (deliverables) deliverables.classList.add('casa-mobile-hidden-section')
-    if (finalCta) finalCta.classList.add('casa-mobile-hidden-section')
-
-    const order = [hero, trustBar, portfolio, reviews, packages, process, serviceArea, about, contact, footer].filter(Boolean)
-    order.forEach((section) => main.appendChild(section))
-    main.dataset.mobileOrdered = 'true'
-  }
-
-  onReady(() => {
-    setTimeout(setup, 1700)
-    setTimeout(setup, 2600)
-  })
-}
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
@@ -274,6 +204,4 @@ createRoot(document.getElementById('root')).render(
 enhanceMobileCta()
 enhanceMobileNavigation()
 enhanceImagesAndPerformance()
-enhanceMobileFooter()
 enhanceGoogleReviews()
-enhanceMobileHomepageOrder()
