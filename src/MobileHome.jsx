@@ -164,8 +164,14 @@ function MobileHome() {
 
       <footer className="casa-mobile-footer">
         <p>Casa Stegui Property Media</p>
-        <a href="mailto:casastegui.media@gmail.com">casastegui.media@gmail.com</a>
-        <a href="https://www.instagram.com/casastegui.media" target="_blank" rel="noopener noreferrer">@casastegui.media</a>
+        <div className="casa-mobile-footer-grid">
+          <a href="mailto:casastegui.media@gmail.com">casastegui.media@gmail.com</a>
+          <a href="tel:+14073614831">(407) 361-4831</a>
+          <span>17 N 2nd Street #1063<br />Temple, TX 76501</span>
+          <span>Serving Central Texas Realtors</span>
+          <a href="https://www.instagram.com/casastegui.media" target="_blank" rel="noopener noreferrer">Instagram · @casastegui.media</a>
+          <a href="https://www.facebook.com/CasaSteguiPropertyMedia" target="_blank" rel="noopener noreferrer">Facebook · CasaStegui Property Media</a>
+        </div>
       </footer>
 
       <a href={ORDER_URL} target="_blank" rel="noopener noreferrer" className="casa-mobile-sticky-book">▣ Book Your Shoot →</a>
