@@ -1,409 +1,550 @@
-/* Casa Stegui compact mobile recovery layer */
 html,
 body,
 #root {
+  width: 100%;
   max-width: 100%;
-  overflow-x: hidden !important;
+  overflow-x: hidden;
 }
 
 @media (max-width: 767px) {
-  body {
-    padding-bottom: 92px !important;
+  body.casa-mobile-home-active {
+    margin: 0;
+    background: #070706;
+    color: #fffef6;
+    padding-bottom: 86px;
   }
 
-  #root,
-  #root main,
-  #root section,
-  #root footer,
-  #root header {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-    box-sizing: border-box !important;
+  body.casa-mobile-home-active * {
+    box-sizing: border-box;
   }
 
-  /* Compact header. No giant floating menu bar. */
-  header {
-    min-height: 96px !important;
-    overflow: visible !important;
+  .casa-mobile-home {
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    background:
+      radial-gradient(circle at 80% 4%, rgba(254, 127, 45, 0.14), transparent 28%),
+      linear-gradient(180deg, #050505 0%, #11100f 38%, #1b1917 100%);
+    color: #fffef6;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
-  header > div {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 16px !important;
-    padding-top: 18px !important;
-    padding-bottom: 18px !important;
+  .casa-mobile-home button,
+  .casa-mobile-home a {
+    -webkit-tap-highlight-color: transparent;
   }
 
-  header nav {
-    display: none !important;
+  .casa-mobile-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 18px 22px 16px;
+    border-bottom: 1px solid rgba(255, 254, 246, 0.08);
+    background: rgba(5, 5, 5, 0.88);
+    backdrop-filter: blur(18px);
   }
 
-  header img {
-    width: auto !important;
-    max-width: min(62vw, 245px) !important;
-    height: auto !important;
-    max-height: 58px !important;
+  .casa-mobile-brand {
+    display: grid;
+    gap: 2px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fffef6;
+    text-align: left;
   }
 
-  .casa-mobile-menu-button {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    z-index: 80 !important;
-    width: 48px !important;
-    min-width: 48px !important;
-    max-width: 48px !important;
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 48px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 6px !important;
-    flex-direction: column !important;
-    border: 1px solid rgba(255, 254, 246, 0.2) !important;
-    border-radius: 999px !important;
-    background: rgba(37, 36, 34, 0.82) !important;
-    color: #fffef6 !important;
-    box-shadow: none !important;
-    text-indent: 0 !important;
-    letter-spacing: 0 !important;
+  .casa-mobile-brand span {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.55rem;
+    line-height: 1;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
   }
 
-  .casa-mobile-menu-button span {
-    display: block !important;
-    width: 17px !important;
-    height: 2px !important;
-    border-radius: 999px !important;
-    background: #fffef6 !important;
+  .casa-mobile-brand small {
+    color: #fe7f2d;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
 
-  /* Drawer behavior */
-  .casa-mobile-nav-drawer,
-  .casa-quote-sheet {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 10000 !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transition: opacity 180ms ease !important;
+  .casa-mobile-menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    padding: 11px;
+    border: 1px solid rgba(255, 254, 246, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 254, 246, 0.04);
   }
 
-  .casa-mobile-nav-drawer.is-open,
-  .casa-quote-sheet.is-open {
-    opacity: 1 !important;
-    pointer-events: auto !important;
+  .casa-mobile-menu-toggle span {
+    display: block;
+    width: 21px;
+    height: 2px;
+    border-radius: 999px;
+    background: #fffef6;
   }
 
-  .casa-mobile-nav-backdrop,
-  .casa-quote-backdrop {
-    position: absolute !important;
-    inset: 0 !important;
-    border: 0 !important;
-    background: rgba(0, 0, 0, 0.58) !important;
+  .casa-mobile-hero {
+    position: relative;
+    min-height: 690px;
+    display: flex;
+    align-items: flex-end;
+    padding: 150px 22px 34px;
+    background-size: cover;
+    background-position: 62% center;
+    overflow: hidden;
   }
 
-  .casa-mobile-nav-panel,
-  .casa-quote-panel {
-    position: absolute !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    max-height: 82vh !important;
-    overflow-y: auto !important;
-    border-radius: 26px 26px 0 0 !important;
-    border: 1px solid rgba(255, 254, 246, 0.12) !important;
-    background: #252422 !important;
-    padding: 20px 22px calc(26px + env(safe-area-inset-bottom)) !important;
-    box-shadow: 0 -28px 80px rgba(0, 0, 0, 0.45) !important;
-    transform: translateY(100%) !important;
-    transition: transform 220ms ease !important;
+  .casa-mobile-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(4, 4, 4, 0.94) 0%, rgba(4, 4, 4, 0.73) 43%, rgba(4, 4, 4, 0.22) 100%),
+      linear-gradient(180deg, rgba(4, 4, 4, 0.35) 0%, rgba(4, 4, 4, 0.06) 38%, rgba(4, 4, 4, 0.96) 100%);
   }
 
-  .casa-mobile-nav-drawer.is-open .casa-mobile-nav-panel,
-  .casa-quote-sheet.is-open .casa-quote-panel {
-    transform: translateY(0) !important;
+  .casa-mobile-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 370px;
   }
 
-  .casa-mobile-nav-head,
-  .casa-quote-header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    margin-bottom: 16px !important;
+  .casa-mobile-eyebrow,
+  .casa-mobile-section-label {
+    margin: 0 0 16px;
+    color: #fe7f2d;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
 
-  .casa-mobile-nav-head p,
-  .casa-quote-header p {
-    margin: 0 !important;
-    color: rgba(255, 254, 246, 0.55) !important;
-    font-size: 11px !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.22em !important;
-    text-transform: uppercase !important;
+  .casa-mobile-hero h1,
+  .casa-mobile-section h2 {
+    margin: 0;
+    color: #fffef6;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.055em;
   }
 
-  .casa-mobile-nav-head button,
-  .casa-quote-close {
-    width: 42px !important;
-    min-width: 42px !important;
-    height: 42px !important;
-    min-height: 42px !important;
-    padding: 0 !important;
-    border: 1px solid rgba(255, 254, 246, 0.14) !important;
-    border-radius: 999px !important;
-    background: transparent !important;
-    color: #fffef6 !important;
-    font-size: 24px !important;
+  .casa-mobile-hero h1 {
+    max-width: 340px;
+    font-size: clamp(3.15rem, 14vw, 4.25rem);
+    line-height: 0.87;
   }
 
-  .casa-mobile-nav-panel nav,
-  .casa-quote-actions {
-    display: grid !important;
-    gap: 10px !important;
+  .casa-mobile-lead {
+    margin: 20px 0 0;
+    max-width: 330px;
+    color: rgba(255, 254, 246, 0.74);
+    font-size: 1rem;
+    line-height: 1.56;
   }
 
-  .casa-mobile-nav-panel a,
-  .casa-mobile-nav-panel button,
-  .casa-quote-actions a {
-    display: flex !important;
-    min-height: 54px !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    border: 1px solid rgba(255, 254, 246, 0.12) !important;
-    border-radius: 16px !important;
-    padding: 0 16px !important;
-    color: #fffef6 !important;
-    background: transparent !important;
-    text-decoration: none !important;
-    font: inherit !important;
-    font-weight: 700 !important;
+  .casa-mobile-hero-actions {
+    display: grid;
+    gap: 12px;
+    max-width: 285px;
+    margin-top: 26px;
   }
 
-  .casa-menu-open,
-  .casa-sheet-open {
-    overflow: hidden !important;
+  .casa-mobile-primary,
+  .casa-mobile-secondary,
+  .casa-mobile-package-card a,
+  .casa-mobile-sticky-book {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
-  /* Fresh compact mobile spacing */
-  section[class*="px-[6%]"],
-  footer[class*="px-[6%]"] {
-    padding-left: 6% !important;
-    padding-right: 6% !important;
+  .casa-mobile-primary,
+  .casa-mobile-package-card a,
+  .casa-mobile-sticky-book {
+    border: 1px solid rgba(254, 127, 45, 0.88);
+    background: linear-gradient(135deg, #ff6d10, #fe7f2d);
+    color: #fffef6;
+    box-shadow: 0 18px 46px rgba(254, 127, 45, 0.28);
   }
 
-  section[class*="py-28"],
-  section[class*="py-24"],
-  section[class*="py-20"] {
-    padding-top: 58px !important;
-    padding-bottom: 58px !important;
+  .casa-mobile-secondary {
+    border: 1px solid rgba(255, 254, 246, 0.5);
+    background: rgba(0, 0, 0, 0.18);
+    color: #fffef6;
   }
 
-  h1,
-  h2,
-  section h1,
-  section h2,
-  .casa-google-reviews-section h2 {
-    font-size: clamp(2.65rem, 10.8vw, 3.85rem) !important;
-    line-height: 1.04 !important;
-    letter-spacing: -0.036em !important;
-    max-width: 100% !important;
-    overflow-wrap: normal !important;
-    word-break: normal !important;
+  .casa-mobile-trustbar {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    margin: 18px 18px 0;
+    padding: 14px 8px;
+    border: 1px solid rgba(255, 254, 246, 0.14);
+    border-radius: 18px;
+    background: rgba(12, 12, 11, 0.84);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 70px rgba(0, 0, 0, 0.28);
   }
 
-  section h3 {
-    font-size: clamp(1.8rem, 7.2vw, 2.55rem) !important;
-    line-height: 1.08 !important;
+  .casa-mobile-trustbar div {
+    display: grid;
+    gap: 8px;
+    place-items: center;
+    min-width: 0;
+    padding: 0 4px;
+    border-right: 1px solid rgba(255, 254, 246, 0.1);
   }
 
-  p,
-  li {
-    font-size: 0.98rem !important;
-    line-height: 1.65 !important;
+  .casa-mobile-trustbar div:last-child {
+    border-right: 0;
   }
 
-  p[class*="tracking"],
-  .uppercase {
-    letter-spacing: 0.18em !important;
+  .casa-mobile-trustbar span {
+    color: #fe7f2d;
+    font-size: 1.25rem;
+    line-height: 1;
   }
 
-  /* Hero: room under compact header, no crowding */
-  section[class*="min-h-screen"] {
-    min-height: auto !important;
-    padding-top: 140px !important;
-    padding-bottom: 72px !important;
-    align-items: flex-start !important;
-    background-position: center top !important;
+  .casa-mobile-trustbar p {
+    margin: 0;
+    color: rgba(255, 254, 246, 0.82);
+    font-size: 0.58rem;
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
   }
 
-  section[class*="min-h-screen"] > div {
-    width: 100% !important;
-    max-width: 100% !important;
+  .casa-mobile-section {
+    padding: 48px 22px;
+    border-bottom: 1px solid rgba(255, 254, 246, 0.08);
   }
 
-  section[class*="min-h-screen"] h1 {
-    font-size: clamp(2.8rem, 11.4vw, 4rem) !important;
-    line-height: 1.02 !important;
-    letter-spacing: -0.04em !important;
+  .casa-mobile-section h2 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 0.98;
   }
 
-  section[class*="min-h-screen"] div[class*="mt-20"],
-  section[class*="min-h-screen"] div[class*="mt-12"] {
-    margin-top: 28px !important;
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
+  .casa-mobile-featured h2,
+  .casa-mobile-reviews h2 {
+    max-width: 340px;
   }
 
-  section[class*="min-h-screen"] a,
-  section[class*="min-h-screen"] button {
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 54px !important;
-    box-sizing: border-box !important;
-    justify-content: center !important;
+  .casa-mobile-gallery-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 42%;
+    gap: 12px;
+    margin: 24px -22px 0;
+    padding: 0 22px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
 
-  /* Cards and grids */
-  .grid {
-    gap: 18px !important;
+  .casa-mobile-gallery-row::-webkit-scrollbar {
+    display: none;
   }
 
-  article,
-  .rounded-2xl,
-  .rounded-3xl {
-    border-radius: 20px !important;
+  .casa-mobile-thumb {
+    scroll-snap-align: start;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid rgba(255, 254, 246, 0.12);
+    border-radius: 10px;
+    background: #191817;
+    padding: 0;
   }
 
-  article[class*="p-8"],
-  form[class*="p-10"],
-  div[class*="p-10"] {
-    padding: 22px !important;
+  .casa-mobile-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
-  /* Service areas: compact balanced grid */
-  section:has(span.rounded-full) .mt-14.flex {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
+  .casa-mobile-text-link {
+    display: block;
+    margin: 20px auto 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fe7f2d;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
 
-  section:has(span.rounded-full) span.rounded-full {
-    width: 100% !important;
-    min-height: 50px !important;
-    box-sizing: border-box !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 10px !important;
-    text-align: center !important;
-    font-size: 0.72rem !important;
-    line-height: 1.25 !important;
-    letter-spacing: 0.14em !important;
+  .casa-mobile-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    color: rgba(255, 254, 246, 0.7);
   }
 
-  /* Google Reviews */
-  .casa-google-reviews-section {
-    padding-top: 58px !important;
-    padding-bottom: 58px !important;
+  .casa-mobile-rating span {
+    color: #fe7f2d;
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
   }
 
-  .casa-google-reviews-section .md\:flex-row {
-    display: block !important;
+  .casa-mobile-rating strong {
+    color: #fffef6;
+    font-size: 1.1rem;
   }
 
-  .casa-google-reviews-section a[target="_blank"] {
-    display: inline-flex !important;
-    min-height: 44px !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin-top: 20px !important;
-    padding: 0 16px !important;
-    border: 1px solid rgba(254, 127, 45, 0.42) !important;
-    border-radius: 999px !important;
-    color: #fe7f2d !important;
-    background: rgba(254, 127, 45, 0.06) !important;
-    text-decoration: none !important;
-    font-size: 0.72rem !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.16em !important;
-    white-space: nowrap !important;
+  .casa-mobile-rating p {
+    margin: 0;
+    font-size: 0.9rem;
   }
 
-  .casa-google-reviews-section > div:last-child {
-    padding: 16px !important;
+  .casa-mobile-review-widget {
+    min-height: 280px;
+    margin-top: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 254, 246, 0.12);
+    border-radius: 18px;
+    background: rgba(255, 254, 246, 0.035);
+    padding: 14px;
   }
 
-  .casa-google-reviews-section .elfsight-app-15ad62a5-707f-46f1-86d5-f98520e1b8f8 {
-    min-height: 180px !important;
-    width: 100% !important;
+  .casa-mobile-review-widget:empty::before,
+  .casa-mobile-review-widget .elfsight-app-15ad62a5-707f-46f1-86d5-f98520e1b8f8:empty::before {
+    content: "Loading Google reviews…";
+    display: grid;
+    min-height: 210px;
+    place-items: center;
+    color: rgba(255, 254, 246, 0.5);
+    font-size: 0.9rem;
   }
 
-  /* Contact/footer no overflow */
-  #contact .grid,
-  footer.grid,
-  #contact .grid-cols-2 {
-    grid-template-columns: 1fr !important;
+  .casa-mobile-package-card,
+  .casa-mobile-process-grid article,
+  .casa-mobile-about,
+  .casa-mobile-footer {
+    border: 1px solid rgba(255, 254, 246, 0.12);
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(255, 254, 246, 0.045), rgba(255, 254, 246, 0.02));
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
   }
 
-  #contact a,
-  footer a,
-  #contact p,
-  footer p {
-    max-width: 100% !important;
-    overflow-wrap: anywhere !important;
-    word-break: break-word !important;
+  .casa-mobile-package-card {
+    display: grid;
+    gap: 20px;
+    margin-top: 22px;
+    padding: 22px;
   }
 
-  footer {
-    padding-bottom: 132px !important;
+  .casa-mobile-package-card small {
+    display: inline-flex;
+    width: fit-content;
+    margin-bottom: 12px;
+    padding: 7px 10px;
+    border: 1px solid rgba(254, 127, 45, 0.38);
+    border-radius: 999px;
+    color: #fe7f2d;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
-  /* Sticky CTA: compact and inside screen */
-  .casa-floating-wrap {
-    left: 14px !important;
-    right: 14px !important;
-    bottom: calc(14px + env(safe-area-inset-bottom)) !important;
-    width: auto !important;
-    max-width: calc(100vw - 28px) !important;
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) 50px !important;
-    gap: 9px !important;
-    align-items: center !important;
+  .casa-mobile-package-card h3 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2.35rem;
+    font-weight: 500;
+    letter-spacing: -0.05em;
   }
 
-  .casa-floating-book {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    min-height: 52px !important;
-    box-sizing: border-box !important;
-    font-size: 0.7rem !important;
-    letter-spacing: 0.15em !important;
-    padding-left: 14px !important;
-    padding-right: 14px !important;
+  .casa-mobile-package-card p,
+  .casa-mobile-process-grid p,
+  .casa-mobile-about p {
+    margin: 12px 0 0;
+    color: rgba(255, 254, 246, 0.64);
+    font-size: 0.96rem;
+    line-height: 1.58;
   }
 
-  .casa-floating-quote {
-    width: 50px !important;
-    min-width: 50px !important;
-    max-width: 50px !important;
-    height: 50px !important;
-    min-height: 50px !important;
-    max-height: 50px !important;
-    padding: 0 !important;
-    border-radius: 999px !important;
+  .casa-mobile-process-grid {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .casa-mobile-process-grid article {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 8px 14px;
+    padding: 18px;
+  }
+
+  .casa-mobile-process-grid span {
+    grid-row: span 2;
+    color: #fe7f2d;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .casa-mobile-process-grid h3 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+  }
+
+  .casa-mobile-process-grid p {
+    margin: 0;
+  }
+
+  .casa-mobile-city-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .casa-mobile-city-grid span {
+    display: grid;
+    min-height: 48px;
+    place-items: center;
+    border: 1px solid rgba(255, 254, 246, 0.12);
+    border-radius: 999px;
+    color: rgba(255, 254, 246, 0.74);
+    background: rgba(255, 254, 246, 0.025);
+    font-size: 0.67rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .casa-mobile-about {
+    margin: 44px 22px 0;
+    padding: 24px;
+  }
+
+  .casa-mobile-about.casa-mobile-section {
+    border-bottom: 0;
+  }
+
+  .casa-mobile-footer {
+    display: grid;
+    gap: 10px;
+    margin: 18px 22px 105px;
+    padding: 22px;
+  }
+
+  .casa-mobile-footer p {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.3rem;
+  }
+
+  .casa-mobile-footer a {
+    color: #fe7f2d;
+    font-size: 0.9rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .casa-mobile-sticky-book {
+    position: fixed;
+    z-index: 80;
+    left: 14px;
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    min-height: 58px;
+    border-radius: 16px;
+  }
+
+  .casa-mobile-menu-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+  }
+
+  .casa-mobile-menu-backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.68);
+  }
+
+  .casa-mobile-menu-card {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: min(330px, calc(100vw - 24px));
+    display: grid;
+    gap: 10px;
+    padding: 18px;
+    border: 1px solid rgba(255, 254, 246, 0.14);
+    border-radius: 24px;
+    background: rgba(18, 17, 16, 0.96);
+    backdrop-filter: blur(22px);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.46);
+  }
+
+  .casa-mobile-menu-card > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .casa-mobile-menu-card p {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.25rem;
+  }
+
+  .casa-mobile-menu-card button,
+  .casa-mobile-menu-card a {
+    min-height: 48px;
+    border: 1px solid rgba(255, 254, 246, 0.11);
+    border-radius: 14px;
+    background: rgba(255, 254, 246, 0.035);
+    color: #fffef6;
+    font: inherit;
+    font-weight: 800;
+    text-align: left;
+    text-decoration: none;
+    padding: 0 15px;
+  }
+
+  .casa-mobile-menu-card a:last-child {
+    display: grid;
+    place-items: center;
+    border-color: rgba(254, 127, 45, 0.8);
+    background: #fe7f2d;
+    color: #fffef6;
+    text-align: center;
   }
 }
 
-#casa-growth-sections,
-.casa-mobile-hidden-section {
-  display: none !important;
+@media (min-width: 768px) {
+  .casa-mobile-home {
+    display: none;
+  }
 }
