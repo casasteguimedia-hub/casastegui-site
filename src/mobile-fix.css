@@ -45,6 +45,103 @@
     background: #fffef6 !important;
   }
 
+  /* Functional full-screen mobile drawer. */
+  .casa-mobile-nav-drawer {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 10000 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 180ms ease !important;
+  }
+
+  .casa-mobile-nav-drawer.is-open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .casa-mobile-nav-backdrop {
+    position: absolute !important;
+    inset: 0 !important;
+    border: 0 !important;
+    background: rgba(0, 0, 0, 0.58) !important;
+  }
+
+  .casa-mobile-nav-panel {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    border-radius: 28px 28px 0 0 !important;
+    border: 1px solid rgba(255, 254, 246, 0.12) !important;
+    background: #252422 !important;
+    padding: 20px 22px calc(28px + env(safe-area-inset-bottom)) !important;
+    box-shadow: 0 -30px 90px rgba(0, 0, 0, 0.45) !important;
+    transform: translateY(100%) !important;
+    transition: transform 220ms ease !important;
+  }
+
+  .casa-mobile-nav-drawer.is-open .casa-mobile-nav-panel {
+    transform: translateY(0) !important;
+  }
+
+  .casa-mobile-nav-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 18px !important;
+  }
+
+  .casa-mobile-nav-head p {
+    margin: 0 !important;
+    color: rgba(255, 254, 246, 0.55) !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.24em !important;
+    text-transform: uppercase !important;
+  }
+
+  .casa-mobile-nav-head button {
+    width: 42px !important;
+    height: 42px !important;
+    border: 1px solid rgba(255, 254, 246, 0.14) !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: #fffef6 !important;
+    font-size: 26px !important;
+  }
+
+  .casa-mobile-nav-panel nav {
+    display: grid !important;
+    gap: 10px !important;
+  }
+
+  .casa-mobile-nav-panel a,
+  .casa-mobile-nav-panel button {
+    display: flex !important;
+    min-height: 56px !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border: 1px solid rgba(255, 254, 246, 0.12) !important;
+    border-radius: 18px !important;
+    padding: 0 18px !important;
+    color: #fffef6 !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    font: inherit !important;
+    font-weight: 700 !important;
+  }
+
+  .casa-mobile-nav-panel a::after,
+  .casa-mobile-nav-panel button::after {
+    content: "→";
+    color: #fe7f2d;
+  }
+
+  .casa-menu-open {
+    overflow: hidden !important;
+  }
+
   /* Add breathing room between logo/nav zone and hero copy. */
   section[class*="min-h-screen"] {
     min-height: 88vh !important;
@@ -81,4 +178,9 @@
   section[class*="min-h-screen"] button {
     min-height: 54px !important;
   }
+}
+
+/* Hide legacy injected growth sections above footer. */
+#casa-growth-sections {
+  display: none !important;
 }
