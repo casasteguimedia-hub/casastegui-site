@@ -29,9 +29,7 @@ button[type="submit"] {
   width: 100%;
 }
 
-/* Mobile floating CTA refinement
-   Primary booking remains visible. Supporting badge is removed.
-   Quote path is hidden by default and revealed when the CTA stack is touched/focused. */
+/* Mobile floating CTA refinement */
 .casa-floating-note {
   display: none !important;
 }
@@ -41,29 +39,161 @@ button[type="submit"] {
 }
 
 .casa-floating-quote {
-  opacity: 0 !important;
-  max-height: 0 !important;
-  min-height: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  transform: translateY(12px) !important;
-  pointer-events: none !important;
+  width: 52px !important;
+  min-width: 52px !important;
+  max-width: 52px !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  padding: 0 !important;
+  align-self: flex-end !important;
+  border-radius: 999px !important;
+  font-size: 0 !important;
+  letter-spacing: 0 !important;
+  background: rgba(37, 36, 34, 0.94) !important;
+  border: 1px solid rgba(255, 254, 246, 0.22) !important;
+  color: #fffef6 !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28) !important;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
   overflow: hidden !important;
-  transition: opacity 180ms ease, transform 180ms ease, max-height 180ms ease, min-height 180ms ease, padding 180ms ease !important;
 }
 
-.casa-floating-wrap:hover .casa-floating-quote,
-.casa-floating-wrap:focus-within .casa-floating-quote {
-  opacity: 1 !important;
-  max-height: 52px !important;
-  min-height: 46px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  transform: translateY(0) !important;
-  pointer-events: auto !important;
+.casa-floating-quote::before {
+  content: "+";
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 300;
+  color: #fffef6;
+}
+
+.casa-sheet-open {
+  overflow: hidden;
+}
+
+.casa-quote-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.casa-quote-sheet.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.casa-quote-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.46);
+}
+
+.casa-quote-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 28px 28px 0 0;
+  border: 1px solid rgba(255, 254, 246, 0.12);
+  background: #252422;
+  padding: 14px 22px calc(24px + env(safe-area-inset-bottom));
+  box-shadow: 0 -30px 90px rgba(0, 0, 0, 0.44);
+  transform: translateY(100%);
+  transition: transform 240ms ease;
+}
+
+.casa-quote-sheet.is-open .casa-quote-panel {
+  transform: translateY(0);
+}
+
+.casa-quote-handle {
+  width: 48px;
+  height: 4px;
+  margin: 0 auto 18px;
+  border-radius: 999px;
+  background: rgba(255, 254, 246, 0.25);
+}
+
+.casa-quote-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.casa-quote-header p {
+  margin: 0;
+  color: rgba(255, 254, 246, 0.55);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.casa-quote-close {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 254, 246, 0.14);
+  border-radius: 999px;
+  background: transparent;
+  color: #fffef6;
+  font-size: 26px;
+}
+
+.casa-quote-panel h2 {
+  margin: 12px 0 20px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #fffef6;
+}
+
+.casa-quote-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.casa-quote-actions a {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 254, 246, 0.12);
+  border-radius: 18px;
+  padding: 0 18px;
+  color: #fffef6;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.casa-quote-actions a::after {
+  content: "→";
+  color: #fe7f2d;
+}
+
+/* Performance and stability */
+img {
+  max-width: 100%;
+}
+
+img[loading="lazy"] {
+  content-visibility: auto;
 }
 
 @media (max-width: 767px) {
+  html {
+    scroll-padding-bottom: 110px;
+  }
+
+  body {
+    padding-bottom: 104px;
+  }
+
   a[href*="order.casastegui.com"],
   button[type="submit"],
   a.casa-floating-book,
@@ -78,19 +208,155 @@ button[type="submit"] {
   .casa-floating-wrap {
     left: 16px !important;
     right: 16px !important;
-    bottom: 16px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
     width: auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr 52px;
+    align-items: center;
   }
 
   .casa-floating-book {
     width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
+    border-radius: 999px !important;
   }
 
-  .casa-floating-wrap:hover .casa-floating-quote,
-  .casa-floating-wrap:focus-within .casa-floating-quote {
-    width: 100% !important;
-    box-sizing: border-box !important;
+  /* Mobile hero redesign */
+  section[class*="min-h-screen"] {
+    min-height: 78vh !important;
+    padding-top: 132px !important;
+    padding-bottom: 72px !important;
+    align-items: flex-start !important;
+  }
+
+  section[class*="min-h-screen"] h1 {
+    font-size: clamp(3.05rem, 15vw, 4.75rem) !important;
+    line-height: 0.92 !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  section[class*="min-h-screen"] p {
+    font-size: 1rem !important;
+    line-height: 1.75 !important;
+  }
+
+  section[class*="min-h-screen"] div[class*="mt-20"] {
+    margin-top: 2rem !important;
+  }
+
+  section[class*="min-h-screen"] a,
+  section[class*="min-h-screen"] button {
+    min-height: 54px !important;
+  }
+
+  /* Mobile navigation foundation */
+  header nav {
+    display: flex !important;
+    width: 100%;
+    gap: 8px !important;
+    overflow-x: auto;
+    justify-content: flex-start !important;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  header nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  header nav button {
+    min-height: 44px;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 254, 246, 0.12);
+    border-radius: 999px;
+    padding: 0 16px;
+    background: rgba(37, 36, 34, 0.5);
+    letter-spacing: 0.16em !important;
+  }
+
+  header img {
+    max-width: min(82vw, 340px) !important;
+    height: auto !important;
+  }
+
+  /* Portfolio as horizontal swipe gallery */
+  section img[class*="h-[620px]"],
+  section img[class*="h-[420px]"] {
+    height: 360px !important;
+  }
+
+  section:has(img[class*="h-[620px]"]) > div:last-child,
+  section:has(img[class*="h-[420px]"]) > div:last-child {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  section:has(img[class*="h-[620px]"]) > div:last-child > *,
+  section:has(img[class*="h-[420px]"]) > div:last-child > * {
+    scroll-snap-align: start;
+  }
+
+  /* Mobile cards and sections */
+  section[class*="py-28"],
+  section[class*="py-24"] {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  article,
+  .rounded-2xl,
+  .rounded-3xl {
+    border-radius: 20px !important;
+  }
+
+  .grid {
+    gap: 18px !important;
+  }
+
+  /* Footer mobile treatment */
+  footer {
+    padding-bottom: 140px !important;
+  }
+
+  footer a[href^="mailto"],
+  footer a[href^="tel"],
+  footer a[href*="instagram"],
+  footer a[href*="facebook"] {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  footer p {
+    overflow-wrap: anywhere;
+  }
+
+  /* Static SEO routes */
+  .cs-wrap,
+  .casa-static-seo {
+    padding: 54px 6% !important;
+  }
+
+  .cs-h1,
+  .casa-static-seo h1 {
+    font-size: clamp(3rem, 14vw, 4.6rem) !important;
+  }
+
+  .cs-lead,
+  .casa-static-seo p {
+    font-size: 1rem !important;
+  }
+
+  .cs-grid,
+  .casa-static-grid {
+    grid-template-columns: 1fr !important;
   }
 }
