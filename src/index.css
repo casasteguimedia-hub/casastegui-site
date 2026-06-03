@@ -29,6 +29,40 @@ button[type="submit"] {
   width: 100%;
 }
 
+/* Mobile floating CTA refinement
+   Primary booking remains visible. Supporting badge is removed.
+   Quote path is hidden by default and revealed when the CTA stack is touched/focused. */
+.casa-floating-note {
+  display: none !important;
+}
+
+.casa-floating-wrap {
+  gap: 10px !important;
+}
+
+.casa-floating-quote {
+  opacity: 0 !important;
+  max-height: 0 !important;
+  min-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  transform: translateY(12px) !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  transition: opacity 180ms ease, transform 180ms ease, max-height 180ms ease, min-height 180ms ease, padding 180ms ease !important;
+}
+
+.casa-floating-wrap:hover .casa-floating-quote,
+.casa-floating-wrap:focus-within .casa-floating-quote {
+  opacity: 1 !important;
+  max-height: 52px !important;
+  min-height: 46px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
+}
+
 @media (max-width: 767px) {
   a[href*="order.casastegui.com"],
   button[type="submit"],
@@ -39,5 +73,24 @@ button[type="submit"] {
     padding-right: 24px !important;
     font-size: 11px !important;
     letter-spacing: 0.16em !important;
+  }
+
+  .casa-floating-wrap {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    width: auto !important;
+  }
+
+  .casa-floating-book {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .casa-floating-wrap:hover .casa-floating-quote,
+  .casa-floating-wrap:focus-within .casa-floating-quote {
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
