@@ -4,3 +4,40 @@ body {
   margin: 0;
   background: #151311;
 }
+
+/* Casa Stegui CTA visibility fix
+   Ensures orange CTA buttons keep readable labels on mobile browsers. */
+a[href*="order.casastegui.com"],
+button[type="submit"],
+a.casa-floating-book,
+.cs-primary {
+  color: #fffef6 !important;
+  background-color: #fe7f2d !important;
+  min-width: 180px;
+  min-height: 52px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-indent: 0 !important;
+  line-height: 1.1 !important;
+}
+
+button[type="submit"] {
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  a[href*="order.casastegui.com"],
+  button[type="submit"],
+  a.casa-floating-book,
+  .cs-primary {
+    min-width: 220px;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.16em !important;
+  }
+}
