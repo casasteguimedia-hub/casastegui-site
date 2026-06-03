@@ -169,34 +169,26 @@ function MobileHome() {
         <p>Casa Stegui is a husband-and-wife property media studio built on precision, communication, and consistent delivery for Central Texas Realtors.</p>
       </section>
 
-      <footer className="casa-mobile-footer">
-        <p>Casa Stegui Property Media</p>
-        <div className="casa-mobile-footer-grid">
-          <div>
-            <span>Email</span>
-            <a href="mailto:casastegui.media@gmail.com">casastegui.media@gmail.com</a>
-          </div>
-          <div>
-            <span>Phone</span>
-            <a href="tel:+14073614831">(407) 361-4831</a>
-          </div>
-          <div>
-            <span>Studio</span>
-            <p>17 N 2nd Street #1063<br />Temple, TX 76501</p>
-          </div>
-          <div>
-            <span>Service Area</span>
-            <p>Temple, Killeen, Copperas Cove, Harker Heights, Belton, Georgetown, Round Rock, and Salado.</p>
-          </div>
-          <div>
-            <span>Instagram</span>
-            <a href="https://www.instagram.com/casastegui.media" target="_blank" rel="noopener noreferrer">@casastegui.media</a>
-          </div>
-          <div>
-            <span>Facebook</span>
-            <a href="https://www.facebook.com/CasaSteguiPropertyMedia" target="_blank" rel="noopener noreferrer">CasaStegui Property Media</a>
-          </div>
+      <footer className="casa-mobile-footer-compact">
+        <h3>Casa Stegui Property Media</h3>
+        <p>Temple, TX · Central Texas Real Estate Media</p>
+        <div className="casa-mobile-footer-contact">
+          <a href="tel:+14073614831">(407) 361-4831</a>
+          <span>·</span>
+          <a href="mailto:casastegui.media@gmail.com">casastegui.media@gmail.com</a>
         </div>
+        <nav className="casa-mobile-footer-nav" aria-label="Mobile footer navigation">
+          <button onClick={() => goTo("/")}>Home</button>
+          <button onClick={() => goTo("/portfolio")}>Portfolio</button>
+          <button onClick={() => goTo("/pricing")}>Pricing</button>
+          <button onClick={() => goTo("/about")}>About</button>
+          <button onClick={() => goTo("/contact")}>Contact</button>
+        </nav>
+        <div className="casa-mobile-footer-socials">
+          <a href="https://www.instagram.com/casastegui.media" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://www.facebook.com/CasaSteguiPropertyMedia" target="_blank" rel="noopener noreferrer">Facebook</a>
+        </div>
+        <small>© {new Date().getFullYear()} Casa Stegui Media</small>
       </footer>
 
       <a href={ORDER_URL} target="_blank" rel="noopener noreferrer" className="casa-mobile-sticky-book">Book Your Shoot →</a>
