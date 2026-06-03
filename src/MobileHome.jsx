@@ -12,6 +12,7 @@ const images = Object.entries(imageModules).map(([path, src]) => ({
   name: path.split("/").pop(),
 }));
 
+const logoImg = images.find((img) => img.name === "CasaSteguiHorizontalLogo_White.png")?.src;
 const heroImg = images.find((img) => img.name === "Hero.jpg")?.src;
 const featuredImages = ["property11.jpg", "property130.jpg", "property143.jpg", "twilight4.png"]
   .map((fileName) => images.find((img) => img.name === fileName))
@@ -44,8 +45,14 @@ function MobileHome() {
     <div className="casa-mobile-home" aria-label="Casa Stegui mobile homepage">
       <header className="casa-mobile-topbar">
         <button className="casa-mobile-brand" onClick={() => goTo("/")} aria-label="Casa Stegui home">
-          <span>Casa Stegui</span>
-          <small>Real Estate Media</small>
+          {logoImg ? (
+            <img src={logoImg} alt="Casa Stegui Property Media" />
+          ) : (
+            <>
+              <span>Casa Stegui</span>
+              <small>Real Estate Media</small>
+            </>
+          )}
         </button>
         <button className="casa-mobile-menu-toggle" onClick={() => setMenuOpen(true)} aria-label="Open menu">
           <span />
@@ -165,16 +172,34 @@ function MobileHome() {
       <footer className="casa-mobile-footer">
         <p>Casa Stegui Property Media</p>
         <div className="casa-mobile-footer-grid">
-          <a href="mailto:casastegui.media@gmail.com">casastegui.media@gmail.com</a>
-          <a href="tel:+14073614831">(407) 361-4831</a>
-          <span>17 N 2nd Street #1063<br />Temple, TX 76501</span>
-          <span>Serving Central Texas Realtors</span>
-          <a href="https://www.instagram.com/casastegui.media" target="_blank" rel="noopener noreferrer">Instagram · @casastegui.media</a>
-          <a href="https://www.facebook.com/CasaSteguiPropertyMedia" target="_blank" rel="noopener noreferrer">Facebook · CasaStegui Property Media</a>
+          <div>
+            <span>Email</span>
+            <a href="mailto:casastegui.media@gmail.com">casastegui.media@gmail.com</a>
+          </div>
+          <div>
+            <span>Phone</span>
+            <a href="tel:+14073614831">(407) 361-4831</a>
+          </div>
+          <div>
+            <span>Studio</span>
+            <p>17 N 2nd Street #1063<br />Temple, TX 76501</p>
+          </div>
+          <div>
+            <span>Service Area</span>
+            <p>Temple, Killeen, Copperas Cove, Harker Heights, Belton, Georgetown, Round Rock, and Salado.</p>
+          </div>
+          <div>
+            <span>Instagram</span>
+            <a href="https://www.instagram.com/casastegui.media" target="_blank" rel="noopener noreferrer">@casastegui.media</a>
+          </div>
+          <div>
+            <span>Facebook</span>
+            <a href="https://www.facebook.com/CasaSteguiPropertyMedia" target="_blank" rel="noopener noreferrer">CasaStegui Property Media</a>
+          </div>
         </div>
       </footer>
 
-      <a href={ORDER_URL} target="_blank" rel="noopener noreferrer" className="casa-mobile-sticky-book">▣ Book Your Shoot →</a>
+      <a href={ORDER_URL} target="_blank" rel="noopener noreferrer" className="casa-mobile-sticky-book">Book Your Shoot →</a>
 
       {menuOpen && (
         <div className="casa-mobile-menu-panel" role="dialog" aria-modal="true">
