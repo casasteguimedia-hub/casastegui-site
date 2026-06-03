@@ -186,6 +186,43 @@ function enhanceMobileFooter() {
   onReady(() => setTimeout(setup, 1100))
 }
 
+function enhanceGoogleReviews() {
+  const setup = () => {
+    if (document.querySelector('.casa-google-reviews-section')) return
+
+    const selectedWorkHeading = [...document.querySelectorAll('p')].find((item) => item.textContent?.includes('Selected Work'))
+    const selectedWorkSection = selectedWorkHeading?.closest('section')
+    if (!selectedWorkSection) return
+
+    if (!document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')) {
+      const script = document.createElement('script')
+      script.src = 'https://elfsightcdn.com/platform.js'
+      script.async = true
+      document.body.appendChild(script)
+    }
+
+    const reviewsSection = document.createElement('section')
+    reviewsSection.className = 'casa-google-reviews-section border-b border-[#fffef6]/10 px-[6%] py-28'
+    reviewsSection.innerHTML = `
+      <div class="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p class="mb-6 text-xs uppercase tracking-[0.45em] text-[#fffef6]/45"><span class="text-[#fe7f2d]">—</span> Google Reviews</p>
+          <h2 class="max-w-5xl font-serif text-[clamp(3rem,6vw,6rem)] leading-[0.95] tracking-[-0.04em]">Trusted by Central Texas Realtors.</h2>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-[#fffef6]/60">Real feedback from clients who booked Casa Stegui for professional listing media, fast delivery, and clear communication.</p>
+        </div>
+        <a href="https://www.google.com/search?q=Casa+Stegui+Media+reviews" target="_blank" rel="noopener noreferrer" class="text-xs font-bold uppercase tracking-[0.28em] text-[#fe7f2d]">Read on Google →</a>
+      </div>
+      <div class="rounded-2xl border border-[#fffef6]/10 bg-[#252422] p-5 shadow-[0_0_80px_rgba(254,127,45,0.08)]">
+        <div class="elfsight-app-15ad62a5-707f-46f1-86d5-f98520e1b8f8" data-elfsight-app-lazy></div>
+      </div>
+    `
+
+    selectedWorkSection.insertAdjacentElement('afterend', reviewsSection)
+  }
+
+  onReady(() => setTimeout(setup, 1400))
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
@@ -196,3 +233,4 @@ enhanceMobileCta()
 enhanceMobileNavigation()
 enhanceImagesAndPerformance()
 enhanceMobileFooter()
+enhanceGoogleReviews()
