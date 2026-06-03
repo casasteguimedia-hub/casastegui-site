@@ -1,0 +1,22 @@
+@media (min-width: 768px) {
+  /*
+    Final desktop cleanup:
+    The desktop footer must be the last visible content block.
+    This removes the legacy duplicate blocks that were still rendering after it:
+    - HOW IT WORKS / Simple booking for busy agents
+    - AGENT TRUST placeholder cards
+  */
+  body:not(.casa-mobile-home-active) footer ~ section,
+  body:not(.casa-mobile-home-active) footer ~ div:not([id]):not([class*="elfsight"]),
+  body:not(.casa-mobile-home-active) footer ~ aside {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+}
