@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/update-travel-pricing.cjs",
     "build": "vite build",
     "preview": "vite preview"
   },
